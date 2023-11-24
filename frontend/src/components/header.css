@@ -1,0 +1,121 @@
+/* Header.css */
+
+.header {
+  background-color: #a79d9d;
+  color: #cfc0c0;
+  padding: 10px 0;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2px;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+}
+
+/* Add this to your existing CSS or create a new CSS file */
+
+.logo {
+  text-decoration: none;
+  color: rgb(126, 85, 85); 
+}
+
+.logo h1 {
+  font-weight: bold;
+  font-size: 1.5rem; 
+}
+
+
+.logo:hover {
+  color: #c52727; 
+}
+
+.nav-menu {
+  list-style: none;
+  display: flex;
+  padding: 10px;
+   
+}
+
+.nav-menu li {
+  margin-right: 20px;
+}
+
+.nav-menu li:last-child {
+  margin-right: 0;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: #782f2f;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.nav-menu a:hover {
+  color: rgb(195, 17, 17); /* Change the color on hover */
+}
+
+
+.container-input {
+    position: relative;
+  }
+  
+  .input {
+    width: 150px;
+    padding: 10px 10px 10px 50px;
+    border-radius: 9999px;
+    border: solid 1px #b53737;
+    transition: all .2s ease-in-out;
+    opacity: 0.8;
+  }
+  
+  .container-input svg {
+    position: absolute;
+    top: 33%;
+    left: 10px;
+    transform: translate(0, -50%);
+  }
+  
+  .input:focus {
+    opacity: 1;
+    width: 250px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1px;
+    padding: 10px;
+  }
+  
+  
+  .prof{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 50px;
+    height: 30px;
+    margin: 0px;
+    cursor: pointer;
+    color: #ffffff;
+    transition: all 0.3s;
+    &:hover {
+      color: rgb(186, 75, 47);
+      transform: scale(1.1);
+      transition: all 0.3s;
+      text-decoration: underline;
+      }
+    
+    }
+  
