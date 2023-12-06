@@ -1,4 +1,5 @@
 "use strict";
+require("dotenv").config();
 
 var express = require("express"),
   app = express(),
@@ -8,26 +9,19 @@ var express = require("express"),
   jsonwebtoken = require("jsonwebtoken");
 
 const mongoose = require("mongoose");
-const option = {
-  socketTimeoutMS: 30000,
-  keepAlive: true,
-  reconnectTries: 30000,
-};
 
-const mongoURI = process.env.MONGODB_URI;
-mongoose
-  .connect(
-    "mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb",
-    option
-  )
-  .then(
-    function () {
-      //connected successfully
-    },
-    function (err) {
-      //err handle
-    }
-  );
+
+const mongoURI =
+  "mongodb+srv://Virtualtryon:WAsLuY17VPSGnhiY@cluster0.lyqthk1.mongodb.net/mydatabase?retryWrites=true&w=majority";
+
+mongoose.connect(mongoURI, {}).then(
+  function () {
+    console.log("MongoDB Connected. Server started on: " + port);
+  },
+  function (err) {
+    console.error("MongoDB connection error: " + err.message);
+  }
+);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -52,6 +46,7 @@ app.use(function (req, res, next) {
     next();
   }
 });
+
 var routes = require("./routes/userRoute");
 routes(app);
 
@@ -61,6 +56,6 @@ app.use(function (req, res) {
 
 app.listen(port);
 
-console.log(" RESTful API server started on: " + port);
+console.log("RESTful API server started on: " + port);
 
 module.exports = app;
