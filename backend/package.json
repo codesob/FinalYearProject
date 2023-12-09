@@ -4,21 +4,30 @@
   "description": "backend",
   "main": "index.js",
   "scripts": {
-    "dev": "node api/server.js",
+    "start": "node src/server.js",
+    "dev": " nodemon server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "Sobin",
   "license": "ISC",
+  "type": "module",
   "dependencies": {
     "@tensorflow/tfjs": "^4.12.0",
     "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
+    "config": "^3.3.9",
+    "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "express-jwt": "^8.4.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.6.3",
     "node": "^20.7.0",
-    "nodemon": "^3.0.2"
+    "nodemailer": "^6.9.7",
+    "nodemon": "^3.0.2",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1"
   }
 }
