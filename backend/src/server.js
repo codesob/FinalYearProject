@@ -1,63 +1,36 @@
-'use strict';
-
-import dotenv from 'dotenv';
-import cors from 'cors';
-import express from 'express';
-import { connectToDatabase } from './config/db.js';
-import { userRoute } from './routes/userRoute.js';
-import jsonwebtoken from 'jsonwebtoken';
-
-dotenv.config();
-
+import express, { json } from "express";
+import { connect } from "mongoose";
+import cors from "cors";
 const app = express();
-const port = process.env.PORT || 3000;
+import dotenv from "dotenv";
+dotenv.config();
+import cookieParser from "cookie-parser";
+import authRoute from "./routes/userRoute.js";
+const { MONGO_URI, PORT } = process.env;
 
-// Connect to database
-connectToDatabase(() => {
-    console.log('MongoDB Connected. Server started on:', port);
+connect(MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  tlsAllowInvalidCertificates: false, // Add this line
+})
+
+.then(() => console.log("MongoDB is connected successfully"))
+.catch((err) => console.error(err));
+
+
+app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
+});
+
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
   })
-  .catch((err) => {
-    console.error('MongoDB connection error:', err.message);
-  });
+);
+app.use(cookieParser());
 
-// Middlewares
-app.use(cors());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(json());
 
-// Authentication middleware
-app.use((req, res, next) => {
-  if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'JWT') {
-    const token = req.headers.authorization.split(' ')[1];
-    try {
-      const decodedToken = jsonwebtoken.verify(token, 'RESTFULAPIs');
-      req.user = decodedToken;
-      next();
-    } catch (error) {
-      req.user = undefined;
-      next();
-    }
-  } else {
-    req.user = undefined;
-    next();
-  }
-});
-
-// Routes
-userRoute(app);
-
-// 404 error handler
-app.use((req, res) => {
-  res.status(404).send({ message: `Route ${req.url} Not found.` });
-});
-
-// Start server
-app.listen(port, () => {
-  console.log('RESTful API server started on:', port);
-});
-
-app.use((req, _res) => {
-    res.status(404).send({ message: `Route ${req.url} Not found.` });
-  });
-
-export default app;
+app.use("/api/users", authRoute);

@@ -1,51 +1,53 @@
-'use strict';
+import User from "../models/userModel.js";
+import { createSecretToken } from "../util/SecretToken.js";
+import bcrypt from "bcryptjs";
 
-var mongoose = require('mongoose'),
-  jwt = require('jsonwebtoken'),
-  bcrypt = require('bcrypt'),
-  User = mongoose.model('User');
-
-exports.register = function(req, res) {
-  var newUser = new User(req.body);
-  newUser.hash_password = bcrypt.hashSync(req.body.password, 10);
-  newUser.save(function(err, user) {
-    if (err) {
-      return res.status(400).send({
-        message: err
-      });
-    } else {
-      user.hash_password = undefined;
-      return res.json(user);
+export async function Signup(req, res, next) {
+  try {
+    const { email, password, username, photo } = req.body;
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.json({ message: "User already exists" });
     }
-  });
-};
-
-exports.sign_in = function(req, res) {
-  User.findOne({
-    email: req.body.email
-  }, function(err, user) {
-    if (err) throw err;
-    if (!user || !user.comparePassword(req.body.password)) {
-      return res.status(401).json({ message: 'Authentication failed. Invalid user or password.' });
-    }
-    return res.json({ token: jwt.sign({ email: user.email, fullName: user.fullName, _id: user._id }, 'RESTFULAPIs') });
-  });
-};
-
-exports.loginRequired = function(req, res, next) {
-  if (req.user) {
+    const user = await User.create({ email, password, username, photo });
+    const token = createSecretToken(user._id);
+    res.cookie("token", token, {
+      withCredentials: true,
+      httpOnly: false,
+    });
+    res
+      .status(201)
+      .json({ message: "User signed in successfully", success: true, user });
     next();
-  } else {
-
-    return res.status(401).json({ message: 'Unauthorized user!!' });
+  } catch (error) {
+    console.error(error);
   }
-};
-exports.profile = function(req, res, next) {
-  if (req.user) {
-    res.send(req.user);
+}
+
+export async function Login(req, res, next) {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.json({ message: "All fields are required" });
+    }
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.json({ message: "Incorrect password or email" });
+    }
+    const auth = await bcrypt.compare(password, user.password);
+    if (!auth) {
+      return res.json({ message: "Incorrect password or email" });
+    }
+    const token = createSecretToken(user._id);
+    res.cookie("token", token, {
+      withCredentials: true,
+      httpOnly: false,
+    });
+    res
+      .status(201)
+      .json({ message: "User logged in successfully", success: true });
     next();
-  } 
-  else {
-   return res.status(401).json({ message: 'Invalid token' });
+  } catch (error) {
+    console.error(error);
   }
 };
