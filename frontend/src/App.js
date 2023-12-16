@@ -7,13 +7,11 @@ import UserProfile from './components/UserProfile';
 import Home from './pages/Home';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Topbar from './components/Topbar';
 import Contact from './pages/Contact';
 
 function App() {
   return (
     <Router>
-    <Topbar/>
       <Header/>
       <Routes>
       <Route path="/" element={<Home/>} />

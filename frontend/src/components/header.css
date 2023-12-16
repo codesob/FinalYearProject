@@ -1,8 +1,8 @@
 /* Header.css */
 
 .header {
-  background-color: #a79d9d;
-  color: #cfc0c0;
+  background-color: #e7ddbf;
+  color: #e2ddba;
   padding: 10px 0;
   position: sticky;
   top: 0;
@@ -22,11 +22,11 @@
   align-items: center;
 }
 
-/* Add this to your existing CSS or create a new CSS file */
 
-.logo {
-  text-decoration: none;
-  color: rgb(126, 85, 85); 
+.vr {
+  width: 70px;
+  height: auto;
+
 }
 
 .logo h1 {
@@ -56,7 +56,7 @@
 
 .nav-menu a {
   text-decoration: none;
-  color: #782f2f;
+  color: #010101;
   font-weight: bold;
   transition: color 0.3s;
 }
