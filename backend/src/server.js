@@ -13,10 +13,8 @@ connect(MONGO_URI, {
   useUnifiedTopology: true,
   tlsAllowInvalidCertificates: false, // Add this line
 })
-
-.then(() => console.log("MongoDB is connected successfully"))
-.catch((err) => console.error(err));
-
+  .then(() => console.log("MongoDB is connected successfully"))
+  .catch((err) => console.error(err));
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
