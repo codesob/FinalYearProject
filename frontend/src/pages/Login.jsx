@@ -17,7 +17,7 @@ const Login = () => {
   };
 
   return (
-   <section>
+   <section className="login">
     <div className="form-box">
       <div className='form-value'>
         <form action=''>
