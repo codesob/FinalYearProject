@@ -56,7 +56,7 @@ const Login = () => {
                   setFormData({ ...formData, email: e.target.value })
                 }
               />
-              <label>Email</label>
+              <label>Email</label> {error && <div className="error-message">{error}</div>}
             </div>
             <div className="inputbox">
               <ion-icon name="lock-closed-outline"></ion-icon>
@@ -69,9 +69,9 @@ const Login = () => {
                   setFormData({ ...formData, password: e.target.value })
                 }
               />
-              <label>Password</label>
+              <label>Password</label> {error && <div className="error-message">{error}</div>}
             </div>
-            {error && <div className="error-message">{error}</div>}
+           
             <div className='forget'>
               <Link to="/forgot-password">Forgot password</Link>
             </div><button type="submit">Login</button>
