@@ -1,120 +1,138 @@
-import "./contact.css";
+import React, { useState } from "react";
+import "./contact.css"; // Assuming you have a Contact.css file
 import locationIcon from "../images/location-icon.png";
 import emailIcon from "../images/email-icon.png";
 import phoneIcon from "../images/phone-icon.png";
-import contactdec from "../images/contact-dec.png";
+import contactDec from "../images/contact-dec.png";
 
-import React from "react";
+const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
 
-export default function Contact() {
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch("YOUR_BACKEND_API_ENDPOINT", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        console.log("Form submitted successfully!");
+        setFormData({ name: "", email: "", subject: "", message: "" });
+        alert("Message sent successfully!");
+      } else {
+        console.error("Form submission failed.");
+        alert("Failed to send message. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("An error occurred while submitting the form.");
+    }
+  };
+
   return (
-    <div id="contact" className="form contact-us section">
-      <div className="container1">
-        <div className="row1">
-          <div className="col-lg-6 offset-lg-3">
-            <div
-              className="section-heading wow fadeIn"
-              data-wow-duration="1s"
-              data-wow-delay="0.5s"
-            >
-              <h6>Contact Us</h6>
-              <h4>Get In Touch With Us Now</h4>
-              <div className="line-dec"></div>
-            </div>
+    <div id="contact" className="contact-container">
+      <div className="form-container">
+        <div className="form-row">
+          <div className="form-heading wow fadeIn">
+            <h2>Contact Us</h2>
+            <h4>Get In Touch With Us Now</h4>
+            <div className="line-decoration"></div>
           </div>
-          <div
-            className="col-lg-12 wow fadeInUp"
-            data-wow-duration="0.5s"
-            data-wow-delay="0.25s"
-          >
-            <form id="contact-form" action="" method="post">
-              <div className="row1">
-                <div className="col-lg-12">
-                  <div className="contact-dec">
-                    <img src={contactdec} alt="" />
+        </div>
+        <div className="form-row wow fadeInUp">
+          <form id="contactForm" action="" method="post" onSubmit={handleSubmit}>
+            <div className="contact-decoration">
+              <img src={contactDec} alt="" />
+            </div>
+            <div className="form-content">
+              <div className="form-row">
+                <div className="contact-info">
+                  <div className="icon">
+                    <img src={phoneIcon} alt="" />
+                    <a href="tel:+9779840033029">+977 9840033029</a>
                   </div>
                 </div>
-                <div className="col-lg-7">
-                  <div className="fill-form">
-                    <div className="row1">
-                      <div className="col-lg-4">
-                        <div className="info-post">
-                          <div className="icon">
-                            <img src={phoneIcon} alt="" />
-                            <a href="#">9840033029</a>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-lg-4">
-                        <div className="info-post">
-                          <div className="icon">
-                            <img src={emailIcon} alt="" />
-                            <a href="#">sobinthapa41@gmail.com</a>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-lg-4">
-                        <div className="info-post">
-                          <div className="icon">
-                            <img src={locationIcon} alt="" />
-                            <a href="#">Basundhara, Kathmandu</a>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-lg-6">
-                        <input
-                          type="text"
-                          name="name"
-                          id="name"
-                          placeholder="Name"
-                          autoComplete="on"
-                          required
-                        />
-
-                        <input
-                          type="text"
-                          name="email"
-                          id="email"
-                          pattern="[^ @]*@[^ @]*"
-                          placeholder="Your Email"
-                          required=""
-                        />
-
-                        <input
-                          type="text"
-                          name="subject"
-                          id="subject"
-                          placeholder="Subject"
-                          autoComplete="on"
-                        />
-                      </div>
-                      <div className="col-lg-6">
-                        <textarea
-                          name="message"
-                          type="text"
-                          className="form-control"
-                          id="message"
-                          placeholder="Message"
-                          required=""
-                        ></textarea>
-                      </div>
-                      <div className="col-lg-12">
-                        <button
-                          type="submit"
-                          id="form-submit"
-                          className="main-button"
-                        >
-                          Send Message
-                        </button>
-                      </div>
-                    </div>
+                <div className="contact-info">
+                  <div className="icon">
+                    <img src={emailIcon} alt="" />
+                    <a href="mailto:sobinthapa1@gmail.com">sobinthapa1@gmail.com</a>
                   </div>
+                </div>
+                <div className="contact-info">
+                  <div className="icon">
+                    <img src={locationIcon} alt="" />
+                    <a href="googlemaps.com">Kathmandu, Nepal</a>
+                  </div>
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    placeholder="Name"
+                    autoComplete="name"
+                    required
+                    value={formData.name}
+                    onChange={handleChange}
+                  />
+
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Your Email"
+                    required
+                    value={formData.email}
+                    onChange={handleChange}
+                  />
+
+                  <input
+                    type="text"
+                    name="subject"
+                    id="subject"
+                    placeholder="Subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                  />
+
+                  <textarea
+                    name="message"
+                    id="message"
+                    placeholder="Message"
+                    required
+                    value={formData.message}
+                    onChange={handleChange}
+                  ></textarea>
+
+                  <button type="submit" id="form-submit" className="submit-button">
+                    Send Message Now
+                  </button>
+
                 </div>
               </div>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default Contact;

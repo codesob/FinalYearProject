@@ -1,51 +1,90 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import './login.config.css'; // You can keep your custom CSS
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./login.config.css";
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    if (storedUser && storedUser.username === username && storedUser.password === password) {
-      navigate('/home');
-    } else {
-      alert('Invalid credentials. Please try again.');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/api/users/login",  // Note the lowercase "login"
+        formData
+      );
+
+      console.log("User logged in successfully", response.data);
+      if (response.status === 200) {
+        toast.success("Login successful");
+        navigate("/");
+      } else {
+        toast.error("Login failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Login failed", error.response.data);
+      setError(
+        error.response.data.message || "Login failed. Please try again."
+      );
+      toast.error("Login failed. Please try again.");
     }
   };
 
   return (
-   <section className="login">
-    <div className="form-box">
-      <div className='form-value'>
-        <form action=''>
+    <section className="login">
+      <ToastContainer />
+      <div className="form-box">
+        <div className="form-value">
           <h2>Login</h2>
-          <div className='inputbox'>
-            <ion-icon name="mail-outline"></ion-icon>
-            <input type="email" required placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-            <label>Username</label>
-          </div>
-          <div className='inputbox'>
-            <ion-icon name="lock-closed-outline"></ion-icon>
-            <input type="password" required placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            <label>Password</label>
-          </div>
-          <div className='forget'>
-            <Link to="/forgot-password">Forgot password?</Link>
-
-          </div>
-          <button onClick={handleLogin}>Login</button>
-          <div className='register'>
-            <p>Don't have an account?</p>
-            <Link to="/signup">Register</Link>
-          </div>
-
-        </form>
+          <form onSubmit={handleSubmit}>
+            <div className="inputbox">
+              <ion-icon name="mail-outline"></ion-icon>
+              <input
+                type="email"
+                required
+                placeholder=""
+                value={formData.email}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
+              />
+              <label>Email</label>
+            </div>
+            <div className="inputbox">
+              <ion-icon name="lock-closed-outline"></ion-icon>
+              <input
+                type="password"
+                required
+                placeholder=""
+                value={formData.password}
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
+              />
+              <label>Password</label>
+            </div>
+            {error && <div className="error-message">{error}</div>}
+            <div className='forget'>
+              <Link to="/forgot-password">Forgot password</Link>
+            </div><button type="submit">Login</button>
+            <div className="register">
+              <p>Don't have an account?</p>
+              <Link to="/signup">
+                <p>Sign Up</p>
+              </Link>
+            </div>
+          </form>
+        </div>
       </div>
-      </div>
-   </section>
+    </section>
   );
 };
 

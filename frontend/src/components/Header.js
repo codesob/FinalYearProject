@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./header.css";
 import { useNavigate } from "react-router-dom";
 import { VscAccount } from "react-icons/vsc";
-import logo from "../fabricvr.png";
+import logo from "../images/fabricvr.png";
 
 const Header = () => {
   const [term, setTerm] = useState("");
@@ -39,7 +39,7 @@ const Header = () => {
           </ul>
         </nav>
 
-        <div className="container-input">
+        <div className="search-input">
           <input
             type="text"
             placeholder="Search"

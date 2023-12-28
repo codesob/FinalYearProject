@@ -11,7 +11,7 @@
   
   .footer-section {
     flex: 1;
-    padding: 10px;
+    padding: 20px;
   }
   
   .footer-section h2 {
@@ -35,10 +35,11 @@
   
   .social-icons {
     display: flex;
+    justify-content: flex-end;
   }
   
   .social-icons a {
-    margin-right: 10px;
+    margin-right: 28px;
     color: #fff;
     text-decoration: none;
   }
@@ -50,4 +51,8 @@
   .copyright {
     text-align: center;
     margin-top: 20px;
+  }
+
+  .footer-text{
+    justify-content: flex-start;
   }
