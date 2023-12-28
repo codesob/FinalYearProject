@@ -29,8 +29,12 @@ const Signup = () => {
       );
 
       console.log("User registered successfully", response.data);
-      toast.success("User registered successfully");
-      navigate("/login");
+      if (response.status === 200) {
+        toast.success("Registration successful");
+        navigate("/login");
+      } else {
+        toast.error("Registration failed. Please try again.");
+      }
     } catch (error) {
       console.error("Registration failed", error.response.data);
       setError(
