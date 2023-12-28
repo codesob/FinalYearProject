@@ -15,19 +15,12 @@ const Signup = () => {
     address: "",
     email: "",
     password: "",
-    confirmPassword: "",
   });
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (formData.password !== formData.confirmPassword) {
-      setError("Password and Confirm Password do not match.");
-      toast.error("Password and Confirm Password do not match.");
-      return;
-    }
 
     try {
       const response = await axios.post(
@@ -130,17 +123,6 @@ const Signup = () => {
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
               />
               <label>Password</label>
-            </div>
-            <div className="signup-input-box">
-              <ion-icon name="lock-closed-outline"></ion-icon>
-              <input
-                type="password"
-                required
-                placeholder=""
-                value={formData.confirmPassword}
-                onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-              />
-              <label>Confirm Password</label>
             </div>
             {error && <div className="error-message">{error}</div>}
             <button type="submit">Sign Up</button>

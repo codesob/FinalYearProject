@@ -24,9 +24,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  photo: {
-    type: String, 
-  },
   email: {
     type: String,
     required: true,
@@ -37,11 +34,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-  },
-  confirmPassword: {
-    type: String,
-    required: true,
-  },
+  }
 });
 
 userSchema.pre("save", async function () {
