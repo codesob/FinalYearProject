@@ -5,7 +5,7 @@ const app = express();
 import dotenv from "dotenv";
 dotenv.config();
 import cookieParser from "cookie-parser";
-import authRoute from "./routes/userRoute.js";
+import authRoute from "./src/routes/userRoute.js";
 const { MONGO_URI, PORT } = process.env;
 
 connect(MONGO_URI, {
