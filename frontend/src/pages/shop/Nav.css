@@ -1,0 +1,26 @@
+nav {
+  display: flex;
+  border-bottom: 2px solid #fd0000;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px;
+  z-index: 999;
+  margin-left: 2rem;
+}
+
+input {
+  padding: 12px 20px;
+  border: none;
+  background: #e2e2e1;
+  outline: none;
+  margin-right: 25px;
+  border-radius: 5px;
+  position: relative;
+  width: 15rem;
+}
+
+.nav-icons {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-left: 2rem;
+}

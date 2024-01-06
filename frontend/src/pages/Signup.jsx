@@ -45,6 +45,7 @@ const Signup = () => {
   };
 
   return (
+    <>
     <section className="sign">
       <ToastContainer />
       <div className="signup-form-box">
@@ -138,6 +139,7 @@ const Signup = () => {
         </div>
       </div>
     </section>
+    </>
   );
 };
 

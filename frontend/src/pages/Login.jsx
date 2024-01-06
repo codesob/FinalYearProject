@@ -18,7 +18,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/users/login",  // Note the lowercase "login"
+        "http://localhost:4000/api/users/login", 
         formData
       );
 
@@ -39,6 +39,7 @@ const Login = () => {
   };
 
   return (
+    <>
     <section className="login">
       <ToastContainer />
       <div className="form-box">
@@ -85,6 +86,7 @@ const Login = () => {
         </div>
       </div>
     </section>
+    </>
   );
 };
 
